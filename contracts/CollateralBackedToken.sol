@@ -35,4 +35,5 @@ contract CollateralBackedToken is ERC20, ERC20Burnable {
         _collateral.transfer(msg.sender, amount * 2);
         emit  Withdrawal(msg.sender, amount * 2);
     }
+    
 }
