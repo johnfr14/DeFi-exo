@@ -1,2 +1,1 @@
-# WETH-DeFi
 # DeFi-exo
