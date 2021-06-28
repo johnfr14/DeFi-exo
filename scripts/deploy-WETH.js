@@ -14,17 +14,15 @@ async function main() {
   // Optionnel car l'account deployer est utilisé par défaut
   const [deployer] = await ethers.getSigners();
   console.log('Deploying contracts with the account:', deployer.address);
-
   // We get the contract to deploy
-  const Greeter = await hre.ethers.getContractFactory('Greeter');
-  const greeter = await Greeter.deploy('Hello, Hardhat!');
-
+  const WETH = await hre.ethers.getContractFactory('WrappedEther');
+  const weth = await WETH.deploy();
   // Attendre que le contrat soit réellement déployé, cad que la transaction de déploiement
   // soit incluse dans un bloc
-  await greeter.deployed();
-
+  await weth.deployed();
+  console.log(weth);
   // Create/update deployed.json and print usefull information on the console.
-  await deployed('Greeter', hre.network.name, greeter.address);
+  await deployed('WrappedEther', hre.network.name, weth.address, weth.deployTransaction.nonce);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
