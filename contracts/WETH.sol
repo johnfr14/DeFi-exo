@@ -3,13 +3,12 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 
-contract WrappedEther is ERC20, ERC20Burnable {
+contract WrappedEther is ERC20 {
     using Address for address payable;
 
-    event  Deposit(address indexed dst, uint wad);
-    event  Withdrawal(address indexed src, uint wad);
+    event  Deposit(address indexed dst, uint256 amount);
+    event  Withdrawal(address indexed src, uint256 amount);
 
     constructor() ERC20("Wrapped Ether", "WETH") {}
 
@@ -23,7 +22,7 @@ contract WrappedEther is ERC20, ERC20Burnable {
     }
 
     function withdraw(uint256 wETH) public {
-        burn(wETH);
+        _burn(msg.sender, wETH);
         payable(msg.sender).sendValue(wETH);
         emit  Withdrawal(msg.sender, wETH);
     }
